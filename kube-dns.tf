@@ -18,7 +18,7 @@ resource "null_resource" "delete_default_kube_dns_configmap" {
 /******************************************
   Create kube-dns confimap
  *****************************************/
-resource "kubernetes_config_map" "kube-dns" {
+/*resource "kubernetes_config_map" "kube-dns" {
   metadata {
     name      = "kube-dns"
     namespace = "kube-system"
@@ -34,5 +34,5 @@ EOF
     "null_resource.delete_default_kube_dns_configmap",
     "google_container_cluster.kubeflow_cluster",
   ]
-}
+}*/
 

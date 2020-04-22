@@ -76,7 +76,7 @@ variable "auto_upgrade" {
 }
 
 variable "main_node_pool_machine_type" {
-  default = "n1-standard-8"
+  default = "n1-standard-1"
 }
 
 variable "gpu_node_pool_machine_type" {

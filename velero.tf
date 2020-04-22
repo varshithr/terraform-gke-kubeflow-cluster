@@ -19,11 +19,11 @@ resource "google_storage_bucket" "backup_bucket" {
 
   bucket_policy_only = true
 
-  location = "EU"
+  location = "US"
 
   # don't destroy buckets containing backup data if re-creating a cluster
   lifecycle {
-    prevent_destroy = true
+    prevent_destroy = false
   }
 }
 
@@ -47,7 +47,7 @@ resource "google_storage_bucket_iam_binding" "ark_bucket_iam" {
 
   # don't destroy buckets containing backup data if re-creating a cluster
   lifecycle {
-    prevent_destroy = true
+    prevent_destroy = false
   }
 }
 

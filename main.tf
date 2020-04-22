@@ -2,6 +2,20 @@
 # the configured Google account
 data "google_client_config" "default" {}
 
+/*resource "google_compute_network" "network" {
+  name                    = var.network
+  auto_create_subnetworks = "false"
+  routing_mode            = "REGIONAL"
+}
+
+resource "google_compute_subnetwork" "subnetwork" {
+  name                     = var.subnetwork
+  region                   = var.cluster_region
+  network                  = google_compute_network.network.self_link
+  ip_cidr_range            = "10.127.0.0/16"
+  private_ip_google_access = true
+}*/
+
 # The GKE cluster. The node pool is managed as a separate resource below.
 resource "google_container_cluster" "kubeflow_cluster" {
   depends_on = [
@@ -28,12 +42,12 @@ resource "google_container_cluster" "kubeflow_cluster" {
   # https://www.terraform.io/docs/providers/google/r/container_cluster.html
   # recommends managing the node pool as a separate resource, which we do
   # below.
-  remove_default_node_pool = true
+  remove_default_node_pool = false
   initial_node_count       = "1"
 
   ip_allocation_policy {
-    cluster_secondary_range_name  = "${var.cluster_secondary_range_name}"
-    services_secondary_range_name = "${var.services_secondary_range_name}"
+    cluster_ipv4_cidr_block  = "/16"
+    services_ipv4_cidr_block = "/16"
   }
 
   resource_labels = {
@@ -145,7 +159,7 @@ resource "google_container_node_pool" "main_pool" {
   }
 }
 
-resource "google_container_node_pool" "gpu_pool" {
+/*resource "google_container_node_pool" "gpu_pool" {
   # max_pods_per_node is in google-beta as of 2019-07-26
   provider = "google-beta"
 
@@ -244,7 +258,7 @@ resource "google_container_node_pool" "highmem_pool" {
     update = "${var.timeout}"
     delete = "${var.timeout}"
   }
-}
+}*/
 
 # A persistent disk to use as the artifact store.
 resource "google_compute_disk" "artifact_store" {

@@ -19,7 +19,7 @@ resource "null_resource" "delete_metrics_server_config_configmap" {
 /******************************************
   Update metrics-server-config configmap
  *****************************************/
-resource "kubernetes_config_map" "metrics-server-config" {
+/*resource "kubernetes_config_map" "metrics-server-config" {
   metadata {
     name      = "metrics-server-config"
     namespace = "kube-system"
@@ -40,3 +40,4 @@ EOF
     "google_container_cluster.kubeflow_cluster",
   ]
 }
+*/
